@@ -1,6 +1,8 @@
 package com.halfdev.my.domain.model;
 
 import com.halfdev.my.domain.ProviderType;
+import com.halfdev.my.interfaces.security.social.github.GithubUserDetails;
+import com.halfdev.my.interfaces.security.social.google.GoogleUserDetails;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,14 +41,12 @@ public class UserConnection {
 //                .build();
 //    }
 
-    // 여기서부터 하면 됨
     public static UserConnection valueOf(GithubUserDetails userDetails) {
         return UserConnection.builder()
                 .expireTime(userDetails.getExpiration())
                 .accessToken(userDetails.getAccessToken())
                 .providerId(userDetails.getId())
-                .email(userDetails.getEmail())                .displayName(userDetails.getName())
-
+                .email(userDetails.getEmail()).displayName(userDetails.getName())
                 .imageUrl(userDetails.getAvatarUrl())
                 .provider(ProviderType.GITHUB)
                 .profileUrl("")
