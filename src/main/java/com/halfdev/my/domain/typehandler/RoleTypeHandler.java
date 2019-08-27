@@ -1,16 +1,21 @@
-package com.halfdev.my.domain.mapper.typehandler;
+package com.halfdev.my.domain.typehandler;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
 import com.halfdev.my.domain.TypeHandlerException;
 import com.halfdev.my.domain.model.RoleType;
+import org.apache.ibatis.type.MappedJdbcTypes;
+import org.apache.ibatis.type.MappedTypes;
 
+@MappedJdbcTypes(JdbcType.INTEGER)
+@MappedTypes(RoleType.class)
 public class RoleTypeHandler<E extends Enum<E>> extends BaseTypeHandler<RoleType> {
 
 	@Override
@@ -33,13 +38,7 @@ public class RoleTypeHandler<E extends Enum<E>> extends BaseTypeHandler<RoleType
 		return getRoleType(cs.getInt(columnIndex));
 	}
 
-	// java 12 switch
 	private RoleType getRoleType(int type) {
-		return switch (type) {
-			case 1 -> RoleType.ADMINISTRATOR;
-			case 2 -> RoleType.MANAGER;
-			case 3 -> RoleType.USER;
-			default -> throw new TypeHandlerException();
-		};
+		return Arrays.stream(RoleType.values()).filter(e -> e.getValue() == type).findFirst().orElseThrow();
 	}
 }

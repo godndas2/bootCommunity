@@ -10,24 +10,14 @@ import lombok.Getter;
 @Getter
 public enum UserStatus {
 
-		ON(1),
-		BLOCK(2),
-		DORMANT(3),
-		LEAVE(4);
-		
-		private int value;
-		
-		UserStatus(int value) {
-			this.value = value;
-		}
-		
-		public static Optional<UserStatus> getUserStatusByValue(int value){
-		        return Stream.of(UserStatus.values()).filter(st -> value == st.value).findFirst();
-		}
-		
-		private UserStatus getUserStatus(int type) {
-		    Optional<UserStatus> optionalStatus = UserStatus.getUserStatusByValue(type);
-		    optionalStatus.orElseThrow(() ->  new TypeHandlerException());
-		    return optionalStatus.get();
-		}
+	ON(1),
+	BLOCK(2),
+	DORMANT(3),
+	LEAVE(4);
+
+	private int value;
+
+	UserStatus(int value) {
+		this.value = value;
+	}
 }

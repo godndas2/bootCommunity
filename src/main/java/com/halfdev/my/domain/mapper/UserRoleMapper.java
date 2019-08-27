@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
-import com.halfdev.my.domain.mapper.typehandler.RoleTypeHandler;
+import com.halfdev.my.domain.typehandler.RoleTypeHandler;
 import com.halfdev.my.domain.model.Role;
 import com.halfdev.my.domain.model.UserRole;
 

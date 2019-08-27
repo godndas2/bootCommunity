@@ -1,56 +1,43 @@
-spring:
-  profiles: default
-  application:
-    name: Halfdev
-  banner:
-    charset: UTF-8
-    location: classpath:halfdev.txt
+#server:
+#  ssl:
+#    key-alias: halfdev
+#    key-store: https://jojoldu.tistory.com/350
+#    key-store-type: PKCS12
+#    key-store-password: halfdev
+#    enabled: true
+#  port: 8443
 
-logging:
-  level:
-    org.springframework: debug
-    com.halfdev.my: debug
+google:
+  client:
+    clientId: ${OAUTH2_GOOGLE_CLIENTID}
+    clientSecret: ${OAUTH2_GOOGLE_CLIENTSECRET}
+    accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+    clientAuthenticationScheme: form
+    scope:
+      - email
+      - profile
+  resource:
+    userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
 
----
+#facebook:
+#  client:
+#    clientId: ${OAUTH2_FACEBOOK_CLIENTID}
+#    clientSecret: ${OAUTH2_FACEBOOK_CLIENTSECRET}
+#    accessTokenUri: https://graph.facebook.com/oauth/access_token
+#    userAuthorizationUri: https://www.facebook.com/dialog/oauth
+#    tokenName: oauth_token
+#    authenticationScheme: query
+#    clientAuthenticationScheme: form
+#  resource:
+#    https://graph.facebook.com/me?fields=id,email,name
 
-spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    password: halfdev
-    url: jdbc:mysql://localhost:3306/bootcommunity?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    username: bootcommunity
-#  jpa:
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-#    hibernate:
-#      ddl-auto: validate
-
-#mysql:
-#    driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/bootcommunity?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-#    username: bootcommunity
-#    password: halfdev
-#  jpa:
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-#    hibernate:
-#      ddl-auto: validate
-
----
-
-logging:
-  config: classpath:logback.xml
-
-spring:
-  profiles: dev
-  application:
-    name: Halfdev
-  banner:
-    charset: UTF-8
-    location: classpath:halfdev.txt
-
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
-    default-fetch-size: 1000
-    default-statement-timeout: 30
-  type-aliases-package: com.halfdev.my.domain
-  type-handlers-package: com.halfdev.my.domain
+github:
+  client:
+    clientId: ${OAUTH2_GITHUB_CLIENTID}
+    clientSecret: ${OAUTH2_GITHUB_CLIENTSECRET}
+    accessTokenUri: https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://github.com/login/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.github.com/user

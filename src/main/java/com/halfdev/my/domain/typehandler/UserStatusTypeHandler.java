@@ -1,16 +1,21 @@
-package com.halfdev.my.domain.mapper.typehandler;
+package com.halfdev.my.domain.typehandler;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
 import com.halfdev.my.domain.TypeHandlerException;
 import com.halfdev.my.domain.model.UserStatus;
+import org.apache.ibatis.type.MappedJdbcTypes;
+import org.apache.ibatis.type.MappedTypes;
 
+@MappedJdbcTypes(JdbcType.CHAR)
+@MappedTypes(UserStatus.class)
 public class UserStatusTypeHandler<E extends Enum<E>> extends BaseTypeHandler<UserStatus> {
 
 	@Override
@@ -33,26 +38,7 @@ public class UserStatusTypeHandler<E extends Enum<E>> extends BaseTypeHandler<Us
 		return getUserStatus(cs.getInt(columnIndex));
 	}
 
-	// java 12 switch
-//	private UserStatus getUserStatus(int type) {
-//		return switch (type) {
-//			case 1 -> UserStatus.ON;
-//			case 2 -> UserStatus.BLOCK;
-//			case 3 -> UserStatus.DORMANT;
-//			case 4 -> UserStatus.LEAVE;
-//			default -> throw new TypeHandlerException();
-//		};
-//	}
-	
-	// java 8 switch
-	private int getUserStatus(int type) {
-		switch (type) {
-			case ON:  /* ? */ break;
-			case BLOCK: break;
-			case DORMANT: break;
-			case LEAVE: break;
-			default: throw new TypeHandlerException();
-		};
-		return type;
+	private UserStatus getUserStatus(int type) {
+		return Arrays.stream(UserStatus.values()).filter(e -> e.getValue() == type).findFirst().orElseThrow();
 	}
 }
